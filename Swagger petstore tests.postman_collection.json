@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "5c6e2da8-42a6-4973-aeab-22ef5dee7027",
+		"name": "Swagger petstore tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20107567",
+		"_collection_link": "https://cloudy-shadow-934699.postman.co/workspace/New-Team-Workspace~6ac45850-ea3b-46dd-a918-4fa63d9203a3/collection/20107567-5c6e2da8-42a6-4973-aeab-22ef5dee7027?action=share&source=collection_link&creator=20107567"
+	},
+	"item": [
+		{
+			"name": "1-User_login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/user/login?user={{Username}}&pass=1234",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{Username}}"
+						},
+						{
+							"key": "pass",
+							"value": "1234"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2-Available_pets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"PetID\", jsonData[0][\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/pet/findByStatus?status=available",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3-Available_pet_info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/pet/{{PetID}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"pet",
+						"{{PetID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4-Pet_order",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1234,\r\n  \"petId\": {{PetID}},\r\n  \"quantity\": 1,\r\n  \"shipDate\": \"2023-09-14T17:27:55.148Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/store/order",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"store",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5-Update_user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"username\": \"string\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/user/{{Username}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"user",
+						"{{Username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6-User_logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/user/logout",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "petstore.swagger.io/v2",
+			"type": "default"
+		},
+		{
+			"key": "PetID",
+			"value": "9223372036854771967"
+		},
+		{
+			"key": "Username",
+			"value": "admin",
+			"type": "default"
+		}
+	]
+}
